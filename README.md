@@ -45,12 +45,15 @@ The Dialogue system consists of two parts: chatbot service and web interface.
 ### BART Model Fine-Tuning
 
 ```python
-python finetune.py
+python -u main.py --mode train
 ```
 
 Note that the output trained model weight files will be saved in the path `/model`.
 
-## Evaluation
+## Inference
 
+```python
+python -u main.py --mode inference --load_model --model_path ./model/
+```
 
-
+Load model from  `/model` and get result.txt in  `/data`
