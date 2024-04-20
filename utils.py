@@ -20,13 +20,14 @@ def calculate_bleu_2(reference, candidate):
                 weights=[1, 0, 0, 0])
     except:
         bleu_1 = 0
-        try:
-            bleu_2 = bleu_score.sentence_bleu(
-                [reference], candidate,
-                smoothing_function=SmoothingFunction().method1,
-                weights=[0.5, 0.5, 0, 0])
-        except:
-            bleu_2 = 0
+
+    try:
+        bleu_2 = bleu_score.sentence_bleu(
+            [reference], candidate,
+            smoothing_function=SmoothingFunction().method1,
+            weights=[0.5, 0.5, 0, 0])
+    except:
+        bleu_2 = 0
 
     return (bleu_1+bleu_2)/2
 
