@@ -5,7 +5,7 @@ In this project, we construct a dialogue system based on the project datasets. T
 * A chatbot based on the BART model which is trained by our group.
 * A chatbot based on a pre-trained large language model.
 
-The our system structure can be divided into three parts:
+The system structure can be divided into three parts:
 
 * A web interface to showcase our system.
 * Two chatbots and a http server to provide the dialogue service.
