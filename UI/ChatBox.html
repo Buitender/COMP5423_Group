@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="top-div">
+            <ul class="header">
+                COMP5423 Group Project - Dialogue System
+            </ul>
+            <ul class="top-menu">
+              <li><a id="bart-btn">Bart</a></li>
+              <li><a id="api-btn">LLM</a></li>
+            </ul>
+        </div>
+        <div class="chat-display bart">
+            <!-- 对话展示框将在这里 -->
+        </div>
+        <div class="chat-display api">
+
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="请输入内容">
+            <button id="submit-btn">发送</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
