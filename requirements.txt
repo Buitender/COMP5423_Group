@@ -1,2 +1,8 @@
-rouge
-sentence_transformers
+flask
+flask-cors
+transformers
+dashscope
+spacy
+sentence-transformers
+https://github.com/explosion/spacy-models/releases/download/zh_core_web_sm-3.2.0/zh_core_web_sm-3.2.0.tar.gz
+nltk
