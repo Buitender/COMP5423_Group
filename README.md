@@ -50,21 +50,6 @@ python finetune.py
 
 Note that the output trained model weight files will be saved in the path `/model`.
 
-
-```python
-python main_plan.py --mode test --lang "en" \
-    --test_data "data/DuRecDial2_en/sample_test_seen.jsonl" \
-    --cache_dir "caches/DuRecDial2_en/plan" \
-    --log_dir "logs/DuRecDial2_en/plan" \
-    --output_dir "outputs/DuRecDial2_en/plan" \
-    --test_batch_size 1 \
-    --max_dec_len 80 \
-    --beam_size 3
-```
-
-Note that the output file `best_model_test_seen.jsonl` or `best_model_test_unseen.jsonl` will be saved in the `--output_dir`.
-
-
 ## Evaluation
 
 
