@@ -1,4 +1,6 @@
+import os
 from transformers import BertTokenizer, BartForConditionalGeneration
+
 from http import HTTPStatus
 import dashscope
 from dashscope import Generation
@@ -6,7 +8,6 @@ from dashscope.api_entities.dashscope_response import Role
 import spacy
 from sentence_transformers import SentenceTransformer, util
 from tqdm import tqdm
-import os
 
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 dashscope.api_key="sk-de9da7cb39b14506a4d45dad34d80469"
