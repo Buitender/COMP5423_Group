@@ -144,3 +144,5 @@ def inference(model, tokenizer, device, input_text):
         
         generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
         results.append(generated_text)
+
+    return results
