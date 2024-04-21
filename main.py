@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from transformers import BartForConditionalGeneration
 
 from utils import set_seed, get_tokenizer, select_accelerator
-from dataset import MyDataset
+from dataset import MyDataset, MyTestDataset
 from trainer import MyTrainer
 
 if __name__ == "__main__":
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         model.to(device)
 
         if args.filefolder_path + "/test.txt" is not None:
-            test_dataset = MyDataset(args.filefolder_path + "/test.txt", "test", "bart_chinese", args.max_len)
+            test_dataset = MyTestDataset(args.filefolder_path + "/test.txt", "test", "bart_chinese", args.max_len)
             test_loader = DataLoader(test_dataset,
                                  collate_fn=test_dataset.collate,
                                  num_workers=8,

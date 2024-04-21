@@ -48,6 +48,11 @@ The Dialogue system consists of two parts: chatbot service and web interface.
 ```python
 python -u main.py --mode train
 ```
+Or
+
+```shell
+sh finetune.sh
+```
 
 Note that the output trained model weight files will be saved in the path `/model`.
 
@@ -56,5 +61,9 @@ Note that the output trained model weight files will be saved in the path `/mode
 ```python
 python -u main.py --mode inference --load_model --model_path ./model/
 ```
+Or
 
+```shell
+sh inference.sh
+```
 Load model from  `/model` and get result.txt in  `/data`
