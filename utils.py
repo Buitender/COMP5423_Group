@@ -35,6 +35,7 @@ def calc_bleu(hyps, refs):
     """ Calculate bleu 1/2 """
     bleu_1 = []
     bleu_2 = []
+    
     for hyp, ref in zip(hyps, refs):
         try:
             score = bleu_score.sentence_bleu(

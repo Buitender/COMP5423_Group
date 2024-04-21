@@ -88,15 +88,6 @@ class MyDataset(Dataset):
             [torch.tensor(instance["labels"], dtype=torch.long) for instance in batch], batch_first=True, padding_value=IGNORE_INDEX)
 
         return input_ids, decoder_input_ids, labels
-    
-import json
-from tqdm import tqdm
-import torch
-from torch.utils.data import Dataset
-from torch.nn.utils.rnn import pad_sequence
-from utils import get_tokenizer
-
-IGNORE_INDEX = -100
 
 class MyTestDataset(Dataset):
     def __init__(self, data_path, data_partition, model_name, max_seq_len, lm_labels=True):
@@ -119,15 +110,17 @@ class MyTestDataset(Dataset):
                 conversation = line_data['conversation']
 
                 input_utterance = "history[" + " ".join(conversation[:-1]) + "] "+" question: " + conversation[-1].strip().split(": ", 1)[1]
-
-                self.data.append((input_utterance, None))
+                input_utterance = self.tokenizer.encode(input_utterance)
+                input_utterance = input_utterance[-500:]
+                
+                self.data.append(input_utterance)
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, index):
 
-        history = self.data[index][0]
+        history = self.data[index]
         response = []
         
         return self._process(history, response)

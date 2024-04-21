@@ -4,10 +4,11 @@ from transformers import BertTokenizer, BartForConditionalGeneration
 from http import HTTPStatus
 import dashscope
 from dashscope import Generation
-from dashscope.api_entities.dashscope_response import Role
 import spacy
 from sentence_transformers import SentenceTransformer, util
 from tqdm import tqdm
+from torch.utils.data import DataLoader
+import json
 
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 dashscope.api_key="sk-de9da7cb39b14506a4d45dad34d80469"
@@ -110,10 +111,10 @@ class ApiChatbot:
             return "请输入内容", self.history
 
         entity = self.extract_entities(input_text)
-        print(entity)
+        #print(entity)
 
         related_data = self.retrieve_information("./data/knowledge_set.txt", entity)
-        print("lenth of related data: ", len(related_data))
+        #print("lenth of related data: ", len(related_data))
 
         top_info = self.calculate_similarity(input_text, related_data)
 
@@ -131,3 +132,24 @@ class ApiChatbot:
                              'content': response.output.choices[0]['message']['content']})
 
         return response.output.choices[0]['message']['content']
+
+if __name__ == "__main__":
+    chatbot = ApiChatbot()
+
+    res = []
+    
+    with open("./data/test.txt", 'r', encoding='utf-8') as file:
+        for line in file.readlines():
+            message = json.loads(line)["conversation"] 
+            message = " ".join(message)
+
+            try:
+                res.append(chatbot.call_with_messages(message))
+            except Exception as e:
+                print(e)
+                res.append("对不起，我不知道。")
+
+    
+    with open("data/qwen_result.txt", "w") as f:
+        for item in res:
+            f.write(item + "\n")

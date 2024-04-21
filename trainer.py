@@ -101,11 +101,14 @@ class MyTrainer(object):
                 pred_ids = torch.argmax(logits, dim=-1)
 
                 for pred_id, label in zip(pred_ids, labels):
-                    pred_text = tokenizer.decode(pred_id, skip_special_tokens=True)
+                    pre_text = tokenizer.decode(pred_id, skip_special_tokens=True)
                     ref_text = tokenizer.decode(label, skip_special_tokens=True)
+
+                    pre_token = tokenizer.tokenize(pre_text)
+                    ref_token = tokenizer.tokenize(ref_text)
                     
-                    bleu_score = calculate_bleu_2(ref_text, pred_text)
-                    rouge_score = calculate_rouge_l(ref_text, pred_text)
+                    bleu_score = calculate_bleu_2(pre_token, ref_token)
+                    rouge_score = calculate_rouge_l(ref_text, pre_text)
 
                                 
                     bleu_scores.append(bleu_score)
@@ -117,35 +120,6 @@ class MyTrainer(object):
 
         return avg_bleu, avg_rouge, avg_loss
     
-    def inference(self, loader):
-        self.model.eval()
-        predicted_sentences = []
-        tokenizer = get_tokenizer("bart_chinese")
-        with torch.no_grad():
-            total_bleu = 0
-            total_samples = 0
-            for inputs in loader:
-                input_ids, decoder_input_ids, labels = tuple(input_tensor.to(self.device) for input_tensor in inputs)
-                lm_output = self.model(
-                    input_ids=input_ids,
-                    decoder_input_ids=decoder_input_ids,
-                    labels=labels,
-                    return_dict=True
-                )
-                logits = lm_output["logits"]
-                loss = lm_output["loss"]
-                
-                predictions = torch.argmax(logits, dim=-1)
-                for pred in predictions:
-                    tokens = tokenizer.convert_ids_to_tokens(pred.tolist())
-                    tokens = self.removeSpecialTokens(tokens)
-                    
-                    predicted_sentences.append("".join(tokens))
-        
-        return predicted_sentences
-
-
-
     def removeSpecialTokens(self, tokens):
         result = []
         for token in tokens:
@@ -155,3 +129,18 @@ class MyTrainer(object):
                 break;
             result.append(token)
         return result
+
+
+def inference(model, tokenizer, device, input_text):
+    model.eval()
+
+    if isinstance(input_text, str):
+        input_text = [input_text]
+
+    results = []
+    for text in input_text:
+        inputs = tokenizer.encode(text, return_tensors="pt", max_length=512, truncation=True).to(device)
+        outputs = model.generate(inputs, num_beams=5, early_stopping=True)
+        
+        generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        results.append(generated_text)
