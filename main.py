@@ -105,7 +105,7 @@ if __name__ == "__main__":
                     message = " ".join(message)
                     test_list.append(message)
             
-            result = inference(model=model, tokenizer=tokenizer, device=device, test_list=test_list)
+            result = inference(model=model, tokenizer=tokenizer, device=device, input_text=test_list)
 
             with open(args.filefolder_path+"/result.txt", "w") as f:
                 for item in result:
