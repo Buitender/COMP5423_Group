@@ -9,7 +9,8 @@ The system structure can be divided into three parts:
 
 * A web interface to showcase our system.
 * Two chatbots and a http server to provide the dialogue service.
-* A BART model finetune framework to show how we train the model.
+* A BART model finetune and inference framework to show how we train and use the model.
+* A Qwen-max llm model with local knowledege as a baseline model to compare.
 
 ## Model Weight Files
 

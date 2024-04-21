@@ -119,6 +119,7 @@ class MyTrainer(object):
     
     def inference(self, loader):
         self.model.eval()
+        predicted_sentences = []
         tokenizer = get_tokenizer("bart_chinese")
         with torch.no_grad():
             total_bleu = 0
@@ -135,11 +136,11 @@ class MyTrainer(object):
                 loss = lm_output["loss"]
                 
                 predictions = torch.argmax(logits, dim=-1)
-                predicted_sentences = []
                 for pred in predictions:
                     tokens = tokenizer.convert_ids_to_tokens(pred.tolist())
                     tokens = self.removeSpecialTokens(tokens)
-                    predicted_sentences.append(tokens)
+                    
+                    predicted_sentences.append("".join(tokens))
         
         return predicted_sentences
 

@@ -106,8 +106,7 @@ if __name__ == "__main__":
             result = trainer.inference(test_loader)
 
             with open(args.filefolder_path+"/result.txt", "w") as f:
-                f.write(str(result) + "\n")
+                for item in result:
+                    f.write("%s\n" % item)
         else:
             raise ValueError("Please provide the path to the test file for inference.")
-
-
