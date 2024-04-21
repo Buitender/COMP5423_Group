@@ -93,7 +93,7 @@ if __name__ == "__main__":
         else:
             print("Initializing a new model.")
             model = BartForConditionalGeneration.from_pretrained("fnlp/bart-base-chinese")
-        model.resize_token_embeddings(len(tokenizer))
+        
         model.to(device)
 
         if args.filefolder_path + "/test.txt" is not None:
@@ -106,6 +106,7 @@ if __name__ == "__main__":
                     test_list.append(message)
             
             result = inference(model=model, tokenizer=tokenizer, device=device, input_text=test_list)
+            result = [item.replace(" ", "") for item in result]
 
             with open(args.filefolder_path+"/result.txt", "w") as f:
                 for item in result:
